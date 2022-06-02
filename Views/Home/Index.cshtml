@@ -1,0 +1,60 @@
+
+@model GitHubUserExam.Models.ViewModels.UserViewModel
+
+@if(Model.ErrorMessage !=null)
+{
+<div class="bg-danger text-danger" id="errorMessage" style="padding:10px;border-radius:5px;margin:10px 0;">@Model.ErrorMessage</div>
+}
+<div class="bg-primary text-success" style="border-radius:5px;padding:5px;margin:10px 0;">
+    <h2>Git Hub User Repositories</h2>
+</div>
+<div class="row">
+    <div class="col-sm-6">
+        <form method="post">
+            <input type="text" id="search" name="Name" placeholder="User Name" style="width:400px;padding:3px;" />
+            <input type="submit" class="btn btn-default" value="Search" style="width:200px;height:30px" />
+        </form>
+    </div>
+</div>
+@if(@Model.UserProfile.name !=null)
+{
+<hr />
+<div class="row">
+    <div class="col-sm-3">
+        <label>Name: </label><span>@Model.UserProfile.name</span>
+    </div>
+    <div class="col-sm-3">
+        <label>Location: </label><span>@Model.UserProfile.location</span>
+    </div>
+    <div class="col-sm-3">
+        <img src=@Model.UserProfile.avatar_url height="70" widht="70" class="bg-info" />
+    </div>
+</div>
+
+    if(@Model.UserDetails.Count() > 0)
+    {
+    <hr />
+    <h3>Repositories</h3>
+    <div class="container row">
+        <table class="table table-bordered table-hover ">
+            <thead class="bg-primary">
+                <tr>
+                    <th style="width:30%">Name</th>
+                    <th style="width:40%">Description</th>
+                    <th style="width:20%">Stargazers</th>
+                </tr>
+            </thead>
+            <tbody class="table-striped">
+                @foreach(var repo in @Model.UserDetails)
+                {
+                <tr>
+                    <td><a href=@repo.html_url target="_blank" rel="noopener noreferrer">@repo.name</a></td>
+                    <td>@repo.description</td>
+                    <td>@repo.stargazers_count</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    }
+}
